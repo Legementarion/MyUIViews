@@ -178,7 +178,9 @@ class FlexItemView @JvmOverloads constructor(
         if (icon != null) {
             val state = icon.constantState
             newIcon = DrawableCompat.wrap(if (state == null) icon else state.newDrawable()).mutate()
-            DrawableCompat.setTintList(icon, iconTint)
+            if (iconTint?.defaultColor != -1) {
+                DrawableCompat.setTintList(icon, iconTint)
+            }
         }
         this.icon.setImageDrawable(newIcon)
     }

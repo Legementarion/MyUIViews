@@ -3,4 +3,12 @@
     <color name="smallCircleColor">#FFDF8D81</color>
     <color name="largeCircleColor">#FFAF3854</color>
     <color name="outerCircleColor">#FF533456</color>
+
+    <color name="menu_unselected">#acadad</color>
+    <color name="menu_home">#fdb24c</color>
+    <color name="menu_message">#0199e0</color>
+    <color name="menu_store">#01a453</color>
+    <color name="menu_university">#c2323c</color>
+    <color name="menu_notification">#fdb24c</color>
+    <color name="menu_user">#00ffffff</color>
 </resources>

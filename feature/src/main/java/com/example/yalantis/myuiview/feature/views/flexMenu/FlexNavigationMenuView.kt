@@ -36,6 +36,7 @@ class FlexNavigationMenuView(context: Context, attrs: AttributeSet? = null) : Vi
     private var buttons: Array<FlexItemView?>? = arrayOf()
     private var selectedItemId = 0
     private var selectedItemPosition = 0
+    private var itemIconTintList: List<ColorStateList> = mutableListOf()
     private var itemIconTint: ColorStateList? = null
     private var itemTextColor: ColorStateList? = null
     private var itemBackgroundRes: Int = 0
@@ -152,6 +153,22 @@ class FlexNavigationMenuView(context: Context, attrs: AttributeSet? = null) : Vi
     }
 
     /**
+     * Sets the tint which is applied to the menu items' icons.
+     *
+     * @param tintList the list of tint to apply
+     */
+    fun setIconTintList(tintList: List<ColorStateList>) {
+        itemIconTintList = tintList
+        if (buttons == null) return
+
+        buttons?.let {
+            for (i in 0 until it.size) {
+                it[i]?.setIconTintList(tintList[i])
+            }
+        }
+    }
+
+    /**
      * Returns the tint which is applied to menu items' icons.
      *
      * @return the ColorStateList that is used to tint menu items' icons
@@ -228,7 +245,7 @@ class FlexNavigationMenuView(context: Context, attrs: AttributeSet? = null) : Vi
             buttons = null
             return
         }
-        buttons = arrayOfNulls(menu?.size() ?: 0)
+        buttons = arrayOfNulls(menuSize)
 
         for (i in 0 until menuSize) {
             presenter?.setUpdateSuspended(true)

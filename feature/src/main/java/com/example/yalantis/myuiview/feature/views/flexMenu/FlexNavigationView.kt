@@ -182,6 +182,20 @@ class FlexNavigationView @JvmOverloads constructor(
     }
 
     /**
+     * Set the tint which is applied to each menu items' icons.
+     *
+     * @param tintList the list of tint to apply.
+     *
+     * @attr ref R.styleable#BottomNavigationView_itemIconTint
+     */
+    fun setItemIconTintList(tintList: List<ColorStateList>) {
+        if (tintList.size != menu.size())
+            throw IllegalArgumentException("FlexNavigation count of tint list of ColorStateList doesn't match to menu items count")
+
+        menuView.setIconTintList(tintList)
+    }
+
+    /**
      * Returns colors used for the different states (normal, selected, focused, etc.) of the menu
      * item text.
      *
@@ -315,7 +329,8 @@ class FlexNavigationView @JvmOverloads constructor(
         }
         val colorPrimary = value.data
         val defaultColor = baseColor.defaultColor
-        return ColorStateList(arrayOf(DISABLED_STATE_SET, CHECKED_STATE_SET, View.EMPTY_STATE_SET), intArrayOf(baseColor.getColorForState(DISABLED_STATE_SET, defaultColor), colorPrimary, defaultColor))
+        return ColorStateList(arrayOf(DISABLED_STATE_SET, CHECKED_STATE_SET, View.EMPTY_STATE_SET),
+                intArrayOf(baseColor.getColorForState(DISABLED_STATE_SET, defaultColor), colorPrimary, defaultColor))
     }
 
     override fun onSaveInstanceState(): Parcelable {
