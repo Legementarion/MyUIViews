@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.*
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.StateListDrawable
 import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v4.view.PointerIconCompat
@@ -36,6 +38,7 @@ class FlexItemView @JvmOverloads constructor(
     private var mShiftAmount: Int
     private var scaleUpFactor: Float
     private var scaleDownFactor: Float
+    private var padding = 80f
     var isCircleItem: Boolean = false
 
     private var icon: ImageView
@@ -184,6 +187,7 @@ class FlexItemView @JvmOverloads constructor(
                 DrawableCompat.setTintList(icon, iconTint)
                 this.icon.setImageDrawable(newIcon)
             } else {
+                this.icon.background = makeSelector()
                 if (isCircleItem)
                     this.icon.setImageBitmap(getCroppedBitmap(convertToBitmap(newIcon, icon.minimumHeight, icon.minimumHeight)))
                 else
@@ -191,6 +195,14 @@ class FlexItemView @JvmOverloads constructor(
 
             }
         }
+    }
+
+    private fun makeSelector(): StateListDrawable {
+        val res = StateListDrawable()
+        res.setExitFadeDuration(400)
+        res.addState(intArrayOf(android.R.attr.state_checked), ContextCompat.getDrawable(context, R.drawable.bg_tab_selected_focused))
+        res.addState(intArrayOf(), ColorDrawable(Color.TRANSPARENT))
+        return res
     }
 
     private fun convertToBitmap(drawable: Drawable, widthPixels: Int, heightPixels: Int): Bitmap {
@@ -216,7 +228,7 @@ class FlexItemView @JvmOverloads constructor(
         paint.color = color
         // canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
         canvas.drawCircle((bitmap.width / 2).toFloat(), (bitmap.height / 2).toFloat(),
-                (bitmap.width / 2).toFloat(), paint)
+                (bitmap.width / 2).toFloat() - padding, paint)
         paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
         canvas.drawBitmap(bitmap, rect, rect, paint)
 
