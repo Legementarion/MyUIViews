@@ -44,6 +44,13 @@ class FlexNavigationMenuView(context: Context, attrs: AttributeSet? = null) : Vi
 
     private var presenter: FlexNavigationPresenter? = null
     private var menu: MenuBuilder? = null
+    var customCircleIcons: Boolean = false
+        set(value) {
+            field = value
+            buttons?.forEach {
+                it?.isCircleItem = value
+            }
+        }
 
     init {
         val res = resources
@@ -252,7 +259,10 @@ class FlexNavigationMenuView(context: Context, attrs: AttributeSet? = null) : Vi
             menu?.getItem(i)?.isCheckable = true
             presenter?.setUpdateSuspended(false)
             val child = getNewItem()
-            buttons?.let { it[i] = child }
+            buttons?.let {
+                it[i] = child
+                it[i]?.isCircleItem = customCircleIcons
+            }
             itemIconTint?.let { child.setIconTintList(it) }
             itemTextColor?.let { child.setTextColor(it) }
             child.hideTitle()

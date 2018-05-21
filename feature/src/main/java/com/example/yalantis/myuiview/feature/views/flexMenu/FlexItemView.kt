@@ -3,6 +3,7 @@ package com.example.yalantis.myuiview.feature.views.flexMenu
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
@@ -35,6 +36,7 @@ class FlexItemView @JvmOverloads constructor(
     private var mShiftAmount: Int
     private var scaleUpFactor: Float
     private var scaleDownFactor: Float
+    var isCircleItem: Boolean = false
 
     private var icon: ImageView
     private var smallLabel: TextView
@@ -180,9 +182,45 @@ class FlexItemView @JvmOverloads constructor(
             newIcon = DrawableCompat.wrap(if (state == null) icon else state.newDrawable()).mutate()
             if (iconTint?.defaultColor != -1) {
                 DrawableCompat.setTintList(icon, iconTint)
+                this.icon.setImageDrawable(newIcon)
+            } else {
+                if (isCircleItem)
+                    this.icon.setImageBitmap(getCroppedBitmap(convertToBitmap(newIcon, icon.minimumHeight, icon.minimumHeight)))
+                else
+                    this.icon.setImageDrawable(newIcon)
+
             }
         }
-        this.icon.setImageDrawable(newIcon)
+    }
+
+    private fun convertToBitmap(drawable: Drawable, widthPixels: Int, heightPixels: Int): Bitmap {
+        val mutableBitmap = Bitmap.createBitmap(widthPixels, heightPixels, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(mutableBitmap)
+        drawable.setBounds(0, 0, widthPixels, heightPixels)
+        drawable.draw(canvas)
+
+        return mutableBitmap
+    }
+
+    private fun getCroppedBitmap(bitmap: Bitmap): Bitmap {
+        val output = Bitmap.createBitmap(bitmap.width,
+                bitmap.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(output)
+
+        val color = -0xbdbdbe
+        val paint = Paint()
+        val rect = Rect(0, 0, bitmap.width, bitmap.height)
+
+        paint.isAntiAlias = true
+        canvas.drawARGB(0, 0, 0, 0)
+        paint.color = color
+        // canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+        canvas.drawCircle((bitmap.width / 2).toFloat(), (bitmap.height / 2).toFloat(),
+                (bitmap.width / 2).toFloat(), paint)
+        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
+        canvas.drawBitmap(bitmap, rect, rect, paint)
+
+        return output
     }
 
     override fun prefersCondensedTitle(): Boolean {

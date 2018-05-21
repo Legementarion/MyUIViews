@@ -41,6 +41,11 @@ class FlexNavigationView @JvmOverloads constructor(
 
     private var selectedListener: OnNavigationItemSelectedListener? = null
     private var reselectedListener: OnNavigationItemReselectedListener? = null
+    var customCircleIcons: Boolean = false
+        set(value) {
+            field = value
+            menuView.customCircleIcons = value
+        }
 
     init {
 //        ThemeUtils.checkAppCompatTheme(context)
@@ -188,11 +193,33 @@ class FlexNavigationView @JvmOverloads constructor(
      *
      * @attr ref R.styleable#BottomNavigationView_itemIconTint
      */
-    fun setItemIconTintList(tintList: List<ColorStateList>) {
-        if (tintList.size != menu.size())
+    fun setItemIconTintList(context: Context, colors: IntArray, unselectedColor: Int) {
+        if (colors.size != menu.size())
             throw IllegalArgumentException("FlexNavigation count of tint list of ColorStateList doesn't match to menu items count")
 
-        menuView.setIconTintList(tintList)
+        menuView.setIconTintList(getTintList(context, colors, unselectedColor))
+    }
+
+    private fun getTintList(context: Context, selectedColor: IntArray, unselectedColor: Int): List<ColorStateList> {
+        val colorTintList = mutableListOf<ColorStateList>()
+        val states = arrayOf(CHECKED_STATE_SET,
+                DISABLED_STATE_SET, EMPTY_STATE_SET)
+
+        selectedColor.forEach {
+            if (it == -1) {
+                colorTintList.add(ColorStateList(states, intArrayOf(-1, -1, -1)))
+            } else
+                colorTintList.add(ColorStateList(states, generateColorState(context, it, unselectedColor)))
+        }
+
+
+        return colorTintList
+    }
+
+    private fun generateColorState(baseContext: Context, selectColor: Int, unselectedColor: Int): IntArray {
+        return intArrayOf(ContextCompat.getColor(baseContext, selectColor),
+                ContextCompat.getColor(baseContext, unselectedColor),
+                ContextCompat.getColor(baseContext, unselectedColor))
     }
 
     /**
