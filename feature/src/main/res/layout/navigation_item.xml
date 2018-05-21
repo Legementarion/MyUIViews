@@ -10,7 +10,8 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/design_bottom_navigation_margin"
         android:layout_marginTop="@dimen/design_bottom_navigation_margin"
-        android:duplicateParentState="true"/>
+        android:duplicateParentState="true"
+        android:padding="2dp" />
 
     <android.support.design.internal.BaselineLayout
         android:layout_width="wrap_content"

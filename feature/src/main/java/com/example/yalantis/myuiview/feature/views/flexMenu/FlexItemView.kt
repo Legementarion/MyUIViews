@@ -185,15 +185,18 @@ class FlexItemView @JvmOverloads constructor(
             newIcon = DrawableCompat.wrap(if (state == null) icon else state.newDrawable()).mutate()
             if (iconTint?.defaultColor != -1) {
                 DrawableCompat.setTintList(icon, iconTint)
-                this.icon.setImageDrawable(newIcon)
-            } else {
+//                this.icon.setImageDrawable(newIcon)
+            }
+            else {
                 this.icon.background = makeSelector()
-                if (isCircleItem)
-                    this.icon.setImageBitmap(getCroppedBitmap(convertToBitmap(newIcon, icon.minimumHeight, icon.minimumHeight)))
-                else
-                    this.icon.setImageDrawable(newIcon)
+//                if (isCircleItem)
+//                    this.icon.setImageBitmap(getCroppedBitmap(convertToBitmap(newIcon, icon.minimumHeight, icon.minimumHeight)))
+//                else
+//                    this.icon.setImageDrawable(newIcon)
 
             }
+            this.icon.setImageDrawable(newIcon)
+
         }
     }
 

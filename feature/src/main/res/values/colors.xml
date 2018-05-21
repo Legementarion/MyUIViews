@@ -11,4 +11,15 @@
     <color name="menu_university">#c2323c</color>
     <color name="menu_notification">#fdb24c</color>
     <color name="menu_user">#00ffffff</color>
+
+    <color name="stepview_line_done">#3d3b3b</color>
+    <color name="stepview_line_next">#3d3b3b</color>
+    <color name="stepview_text_next">#3d3b3b</color>
+    <color name="stepview_text_done">#3d3b3b</color>
+    <color name="stepview_text_selected">#25448a</color>
+    <color name="stepview_circle_done">#989898</color>
+    <color name="stepview_circle_selected">@android:color/white</color>
+    <color name="stepview_selected_number">#fbb833</color>
+    <color name="stepview_mark">#ffffff</color>
+
 </resources>

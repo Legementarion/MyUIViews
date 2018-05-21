@@ -7,6 +7,7 @@ import android.support.annotation.Nullable
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.yalantis.myuiview.feature.views.flexMenu.FlexNavigationView
@@ -15,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    private var currentStep = 0
 
     private val mOnNavigationItemSelectedListener = object : FlexNavigationView.OnNavigationItemSelectedListener {
         override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -49,7 +51,31 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        snakeView.setCount(3, 1)
+        val titles = mutableListOf<String>()
+        titles.add("Checkout")
+        titles.add("Shipping")
+        titles.add("Review")
+
+        stepView.setSteps(titles)
+        stepView.setOnClickListener {
+            if (currentStep < stepView.getStepCount() - 1) {
+                currentStep++
+                stepView.go(currentStep, true)
+            } else {
+                stepView.done(true)
+            }
+        }
+
+        stepView.setOnLongClickListener {
+            if (currentStep > 0) {
+                currentStep--
+            }
+            stepView.done(false)
+            stepView.go(currentStep, true)
+            true
+        }
+
+
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         val colors = intArrayOf(R.color.menu_home, R.color.menu_message, R.color.menu_store, R.color.menu_university, R.color.menu_notification, -1)
@@ -58,6 +84,7 @@ class MainActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Glide.with(this)
                     .load("https://avatars0.githubusercontent.com/u/967132?s=400&v=4")
+                    .apply(RequestOptions().circleCrop().override(240))
                     .into(object : SimpleTarget<Drawable>() {
                         override fun onResourceReady(drawable: Drawable,
                                                      @Nullable transition: Transition<in Drawable>) {

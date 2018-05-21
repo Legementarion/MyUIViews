@@ -9,13 +9,17 @@
 
     <TextView
         android:id="@+id/message"
-        android:layout_width="wrap_content"
+        android:layout_width="38dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:text="@string/title_home"
+        app:layout_constraintBottom_toTopOf="@+id/navigation"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.example.yalantis.myuiview.feature.views.flexMenu.FlexNavigationView
@@ -30,12 +34,15 @@
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/navigation" />
 
-    <com.example.yalantis.myuiview.feature.views.snakePoints.SnakeView
-        android:id="@+id/snakeView"
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
+    <com.example.yalantis.myuiview.feature.views.stepView.StepView
+        android:id="@+id/stepView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:sv_animationType="All"
+        app:sv_stepsNumber="3" />
 
 </android.support.constraint.ConstraintLayout>
