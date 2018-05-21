@@ -38,7 +38,7 @@ class FlexItemView @JvmOverloads constructor(
     private var mShiftAmount: Int
     private var scaleUpFactor: Float
     private var scaleDownFactor: Float
-    private var padding = 80f
+    private val padding = 40f
     var isCircleItem: Boolean = false
 
     private var icon: ImageView
