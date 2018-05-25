@@ -5,8 +5,8 @@
 
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/design_bottom_navigation_margin"
         android:layout_marginTop="@dimen/design_bottom_navigation_margin"
